@@ -28,10 +28,42 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-    const { username , story } = await request.json();
-    const added = await Story.create({ username , story });
-    return NextResponse.json({
-        message: "Story added successfully",
-        story: added,
-    });
+    try {
+        const formData = await request.formData();
+        const username = formData.get('username') as string;
+        const storyFile = formData.get('story') as File;
+        
+        if (!storyFile || !username) {
+            return NextResponse.json(
+                { error: "Image and username are required" },
+                { status: 400 }
+            );
+        }
+
+        // Read the file as ArrayBuffer
+        const bytes = await storyFile.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+        
+        // Convert to base64 for storage
+        // In a production environment, you'd likely upload this to a cloud storage service
+        const base64Image = `data:${storyFile.type};base64,${buffer.toString('base64')}`;
+        
+        const added = await Story.create({
+            username,
+            story: base64Image
+        });
+        
+        return NextResponse.json({
+            message: "Story added successfully",
+            story: added,
+            success: true
+        }, { status: 201 });
+        
+    } catch (error) {
+        console.error('Error creating story:', error);
+        return NextResponse.json(
+            { error: "Failed to create story" },
+            { status: 500 }
+        );
+    }
 }
