@@ -33,11 +33,13 @@ const Stories = () => {
 
     if (loading) {
         return (
-            <div className="flex gap-2 overflow-x-auto p-4 border-b border-gray-200 dark:border-gray-800 scrollbar-hide">
+            <div className="flex gap-4 overflow-x-auto p-4 border-b border-gray-100 dark:border-gray-800 scrollbar-hide">
                 {[...Array(6)].map((_, i) => (
-                    <div key={i} className="flex flex-col items-center space-y-1 flex-shrink-0">
-                        <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 animate-pulse"></div>
-                        <div className="w-12 h-2 bg-gray-200 dark:bg-gray-800 rounded animate-pulse"></div>
+                    <div key={i} className="flex flex-col items-center space-y-2 flex-shrink-0" style={{ animationDelay: `${i * 0.1}s` }}>
+                        <div className="w-20 h-20 rounded-full bg-gray-100 dark:bg-dark-300 animate-pulse relative">
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-dark-200 dark:to-dark-400 opacity-60"></div>
+                        </div>
+                        <div className="w-14 h-2.5 bg-gray-100 dark:bg-dark-300 rounded-full animate-pulse"></div>
                     </div>
                 ))}
             </div>
@@ -49,35 +51,44 @@ const Stories = () => {
     }
 
     return (
-        <div className="flex gap-4 overflow-x-auto py-4 px-2 border-b border-gray-200 dark:border-gray-800 scrollbar-hide">
+        <div className="flex gap-5 overflow-x-auto py-6 px-4 border-b border-gray-100 dark:border-gray-800 scrollbar-hide">
             {/* Add Story Button */}
-            <div className="flex flex-col items-center space-y-1 flex-shrink-0" onClick={() => router.push(`/add/story?username=${username}`)}>
-                <div className="w-16 h-16 rounded-full relative group cursor-pointer">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-80 group-hover:opacity-100 transition-opacity duration-200"></div>
-                    <div className="absolute inset-0.5 bg-white dark:bg-gray-900 rounded-full flex items-center justify-center">
-                        <PlusCircle className="w-8 h-8 text-blue-500" />
+            <div 
+                className="flex flex-col items-center space-y-2 flex-shrink-0 cursor-pointer group" 
+                onClick={() => router.push(`/add/story?username=${username}`)}
+            >
+                <div className="w-20 h-20 rounded-full relative shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                    <div className="absolute inset-0 insta-gradient opacity-90 rounded-full"></div>
+                    <div className="absolute inset-1 bg-white dark:bg-dark-100 rounded-full flex items-center justify-center">
+                        <PlusCircle className="w-9 h-9 text-brand-500 group-hover:text-brand-600 transition-colors" />
                     </div>
                 </div>
-                <span className="text-xs text-gray-700 dark:text-gray-300 font-medium">Add Story</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors">
+                    Add Story
+                </span>
             </div>
 
             {/* Story Items */}
             {stories.map((story: any, index: number) => (
                 <div 
                     key={story._id || story.id} 
-                    className="flex flex-col items-center space-y-1 flex-shrink-0"
+                    className="flex flex-col items-center space-y-2 flex-shrink-0 cursor-pointer group"
                     onClick={() => router.push(`/stories/${index}/${username}`)}
+                    style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                    <div className="w-16 h-16 rounded-full p-0.5 bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 cursor-pointer hover:scale-105 transition-transform duration-200">
-                        <div className="w-full h-full rounded-full overflow-hidden border-2 border-white dark:border-gray-900">
-                            <img 
-                                src={story.story || "https://via.placeholder.com/150"} 
-                                alt={story.username} 
-                                className="w-full h-full object-cover"
-                            />
+                    <div className="relative">
+                        <div className="w-20 h-20 rounded-full story-ring p-0.5 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                            <div className="w-full h-full rounded-full overflow-hidden border-2 border-white dark:border-dark-100">
+                                <img 
+                                    src={story.story || "https://via.placeholder.com/150"} 
+                                    alt={story.username} 
+                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                />
+                            </div>
                         </div>
+                        <div className="absolute bottom-0 right-0 w-5 h-5 bg-green-500 border-2 border-white dark:border-dark-100 rounded-full"></div>
                     </div>
-                    <span className="text-xs text-gray-700 dark:text-gray-300 truncate max-w-[64px] text-center">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate max-w-[80px] text-center group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors">
                         {story.username}
                     </span>
                 </div>
@@ -85,11 +96,13 @@ const Stories = () => {
 
             {/* Show empty placeholders if less than 4 stories */}
             {stories.length < 4 && username && Array.from({ length: 4 - stories.length }).map((_, i) => (
-                <div key={`empty-${i}`} className="flex flex-col items-center space-y-1 flex-shrink-0 opacity-40">
-                    <div className="w-16 h-16 rounded-full p-0.5 bg-gray-300 dark:bg-gray-700">
-                        <div className="w-full h-full rounded-full overflow-hidden border-2 border-white dark:border-gray-900 bg-gray-100 dark:bg-gray-800"></div>
+                <div key={`empty-${i}`} className="flex flex-col items-center space-y-2 flex-shrink-0 opacity-40">
+                    <div className="w-20 h-20 rounded-full bg-gray-200 dark:bg-dark-400 p-0.5 shadow-sm">
+                        <div className="w-full h-full rounded-full overflow-hidden border-2 border-white dark:border-dark-100 bg-gray-100 dark:bg-dark-300">
+                            <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-dark-200 dark:to-dark-400 opacity-60"></div>
+                        </div>
                     </div>
-                    <span className="text-xs text-gray-400 dark:text-gray-600 truncate max-w-[64px] text-center">
+                    <span className="text-sm font-medium text-gray-400 dark:text-gray-600 truncate max-w-[80px] text-center">
                         --------
                     </span>
                 </div>

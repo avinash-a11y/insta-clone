@@ -1,3 +1,429 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --shadow-color: 0deg 0% 63%;
+    --shadow-elevation-low: 0px 0.5px 0.6px hsl(var(--shadow-color) / 0.34),
+      0px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+      0px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+    --shadow-elevation-medium: 0px 0.5px 0.6px hsl(var(--shadow-color) / 0.36),
+      0px 1.8px 2.3px -0.8px hsl(var(--shadow-color) / 0.36),
+      0px 4.4px 5.5px -1.7px hsl(var(--shadow-color) / 0.36),
+      0px 10.6px 13.3px -2.5px hsl(var(--shadow-color) / 0.36);
+    --shadow-elevation-high: 0px 0.5px 0.6px hsl(var(--shadow-color) / 0.34),
+      0px 3.2px 4px -0.4px hsl(var(--shadow-color) / 0.34),
+      0px 6px 7.5px -0.7px hsl(var(--shadow-color) / 0.34),
+      0px 9.9px 12.4px -1.1px hsl(var(--shadow-color) / 0.34),
+      0px 16.3px 20.4px -1.4px hsl(var(--shadow-color) / 0.34),
+      0px 26.6px 33.3px -1.8px hsl(var(--shadow-color) / 0.34),
+      0px 42.2px 52.8px -2.1px hsl(var(--shadow-color) / 0.34),
+      0px 63.9px 79.9px -2.5px hsl(var(--shadow-color) / 0.34);
+  }
+
+  .dark {
+    --shadow-color: 220deg 40% 2%;
+    --shadow-elevation-low: 0px 0.5px 0.6px hsl(var(--shadow-color) / 0.34),
+      0px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+      0px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+    --shadow-elevation-medium: 0px 0.5px 0.6px hsl(var(--shadow-color) / 0.36),
+      0px 1.8px 2.3px -0.8px hsl(var(--shadow-color) / 0.36),
+      0px 4.4px 5.5px -1.7px hsl(var(--shadow-color) / 0.36),
+      0px 10.6px 13.3px -2.5px hsl(var(--shadow-color) / 0.36);
+    --shadow-elevation-high: 0px 0.5px 0.6px hsl(var(--shadow-color) / 0.34),
+      0px 3.2px 4px -0.4px hsl(var(--shadow-color) / 0.34),
+      0px 6px 7.5px -0.7px hsl(var(--shadow-color) / 0.34),
+      0px 9.9px 12.4px -1.1px hsl(var(--shadow-color) / 0.34),
+      0px 16.3px 20.4px -1.4px hsl(var(--shadow-color) / 0.34),
+      0px 26.6px 33.3px -1.8px hsl(var(--shadow-color) / 0.34),
+      0px 42.2px 52.8px -2.1px hsl(var(--shadow-color) / 0.34),
+      0px 63.9px 79.9px -2.5px hsl(var(--shadow-color) / 0.34);
+  }
+}
+
+@layer components {
+  .insta-card {
+    @apply bg-white dark:bg-dark-200 border border-gray-100 dark:border-gray-800 rounded-xl shadow-[var(--shadow-elevation-low)] hover:shadow-[var(--shadow-elevation-medium)] transition-all duration-300 hover:border-gray-200 dark:hover:border-gray-700;
+  }
+  
+  .insta-card-hover {
+    @apply insta-card hover-lift;
+  }
+  
+  .insta-gradient {
+    @apply bg-gradient-to-r from-brand-400 to-brand-600;
+  }
+  
+  .insta-button {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-opacity-50;
+  }
+  
+  .insta-button-primary {
+    @apply insta-button bg-brand-500 hover:bg-brand-600 text-white btn-hover-effect hover-lift;
+  }
+  
+  .insta-button-secondary {
+    @apply insta-button bg-gray-100 dark:bg-dark-300 hover:bg-gray-200 dark:hover:bg-dark-400 text-gray-800 dark:text-gray-200 hover-lift;
+  }
+
+  .insta-input {
+    @apply w-full px-4 py-2 bg-gray-50 dark:bg-dark-300 border border-gray-200 dark:border-dark-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-gray-600;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Story ring animation */
+@keyframes gradientSpin {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.story-ring {
+  background: linear-gradient(
+    90deg,
+    #ff9a8b 0%,
+    #ff6a88 25%,
+    #ff99ac 50%,
+    #ea80fc 75%,
+    #8c9eff 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientSpin 4s linear infinite;
+}
+
+/* Heart animation for likes */
+@keyframes heartBeat {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  15% {
+    transform: scale(1.2);
+    opacity: 0.9;
+  }
+  30% {
+    transform: scale(0.95);
+    opacity: 0.9;
+  }
+  45%, 80% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.heart-animation {
+  animation: heartBeat 1.5s ease-in-out forwards;
+}
+
+/* Shimmer effect for loading states */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+.dark .shimmer {
+  background: linear-gradient(
+    to right,
+    rgba(30, 30, 30, 0) 0%,
+    rgba(60, 60, 60, 0.3) 50%,
+    rgba(30, 30, 30, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* Button hover effect */
+.btn-hover-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-hover-effect:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+.btn-hover-effect:hover:after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(100, 100);
+    opacity: 0;
+  }
+}
+
+/* Micro-interactions and transitions */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevation-medium);
+}
+
+.hover-expand {
+  transition: transform 0.3s ease;
+}
+
+.hover-expand:hover {
+  transform: scale(1.02);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 8px 2px rgba(var(--brand-rgb), 0.3);
+}
+
+/* Notification badge animation */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--brand-rgb), 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(var(--brand-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--brand-rgb), 0);
+  }
+}
+
+.animate-pulse-badge {
+  animation: pulse 2s infinite;
+}
+
+/* Notification bell shake animation */
+@keyframes bell-shake {
+  0% { transform: rotate(0); }
+  15% { transform: rotate(15deg); }
+  30% { transform: rotate(-15deg); }
+  45% { transform: rotate(8deg); }
+  60% { transform: rotate(-8deg); }
+  75% { transform: rotate(4deg); }
+  85% { transform: rotate(-4deg); }
+  92% { transform: rotate(2deg); }
+  100% { transform: rotate(0); }
+}
+
+.animate-bell-shake {
+  animation: bell-shake 2s ease;
+}
+
+.hover-bell-shake:hover {
+  animation: bell-shake 0.7s ease;
+}
+
+/* Staggered animations for lists */
+.stagger-fade-in > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-fade-in > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-fade-in > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-fade-in > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-fade-in > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-fade-in > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-fade-in > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger-fade-in > *:nth-child(8) { animation-delay: 0.8s; }
+.stagger-fade-in > *:nth-child(9) { animation-delay: 0.9s; }
+.stagger-fade-in > *:nth-child(10) { animation-delay: 1s; }
+
+/* Blur effect for modal backgrounds */
+.backdrop-blur-modal {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Better focus styles for accessibility */
+.focus-ring {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-dark-100;
+}
+
+/* Status indicators */
+.status-dot {
+  @apply w-2 h-2 rounded-full;
+}
+
+.status-dot-online {
+  @apply bg-green-500;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(16, 185, 129, 0.3);
+}
+
+.status-dot-away {
+  @apply bg-yellow-500;
+}
+
+.status-dot-offline {
+  @apply bg-gray-400;
+}
+
+/* Skeleton loading animations */
+.skeleton-pulse {
+  @apply animate-pulse bg-gray-200 dark:bg-dark-300 rounded;
+}
+
+.skeleton-text {
+  @apply skeleton-pulse h-4 mb-2;
+}
+
+.skeleton-circle {
+  @apply skeleton-pulse rounded-full;
+}
+
+.skeleton-image {
+  @apply skeleton-pulse rounded-md;
+}
+
+/* Overlay gradients */
+.overlay-gradient-bottom {
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+}
+
+.overlay-gradient-top {
+  background: linear-gradient(to top, transparent, rgba(0, 0, 0, 0.7));
+}
+
+/* 3D button effect */
+.button-3d {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 0 rgba(var(--brand-rgb), 0.5);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.button-3d:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 0 rgba(var(--brand-rgb), 0.5);
+}
+
+/* Tooltip animations */
+@keyframes tooltip-fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tooltip-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-tooltip-fade-down {
+  animation: tooltip-fade-down 0.2s ease-out forwards;
+}
+
+.animate-tooltip-fade-up {
+  animation: tooltip-fade-up 0.2s ease-out forwards;
+}
+
+.animate-tooltip-fade-left {
+  animation: tooltip-fade-left 0.2s ease-out forwards;
+}
+
+.animate-tooltip-fade-right {
+  animation: tooltip-fade-right 0.2s ease-out forwards;
+}
+
+/* Tooltip styling */
+.tooltip-arrow {
+  z-index: -1;
+}
