@@ -12,6 +12,7 @@ const Posts = ({ posts }: { posts: any[] }) => {
   const [expandedCaptions, setExpandedCaptions] = useState<Record<string, boolean>>({});
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Initialize states with posts data
   useEffect(() => {
